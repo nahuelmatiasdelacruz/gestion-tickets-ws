@@ -1,5 +1,6 @@
 import express, { Router } from 'express';
 import path from 'path';
+import cors from 'cors';
 
 interface Options {
   port: number;
@@ -21,6 +22,7 @@ export class Server {
 
   private configure(){
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.static(this.publicPath));
 

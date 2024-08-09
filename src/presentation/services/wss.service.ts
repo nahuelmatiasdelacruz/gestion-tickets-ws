@@ -24,7 +24,13 @@ export class WssService {
     if (!WssService._instance) throw 'WssService is not initialized';
     return WssService._instance;
   };
-
+  public sendMessage(type: string,payload: Object){
+    this.wss.clients.forEach(client=>{
+      if(client.readyState === WebSocket.OPEN){
+        client.send(JSON.stringify({type,payload}));
+      }
+    })
+  }
   public start() {
     this.wss.on('connection', (ws: WebSocket) => {
       console.log('Cliente conectado');
